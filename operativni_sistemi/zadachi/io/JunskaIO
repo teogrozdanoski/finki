@@ -1,0 +1,85 @@
+package dexter_io;
+
+import java.io.*;
+import java.util.*;
+
+public class JunskaIO {
+	
+	public static void manage(String in, String out) throws IOException {
+		
+		File folderIn = new File(in);
+		File folderOut = new File(out);
+		
+		File fWrite = new File("resources/writable-content.txt");
+		
+		RandomAccessFile read = null;
+		RandomAccessFile write = null;
+		
+		if(folderIn.exists()) {
+			
+			if(folderOut.exists()) {
+				File[] fo = folderOut.listFiles();
+				for(File f : fo) {
+					f.delete();
+				}
+				folderOut.delete();
+			}
+			
+			folderOut.mkdir();
+		
+			File[] files = folderIn.listFiles();
+			
+			for(File f : files) {
+				if(!f.isDirectory() && f.isFile() && f.getName().endsWith(".dat")) {
+					if(f.isHidden()) {
+						System.out.println("zbunet sum " + f.getAbsolutePath());
+						f.delete();
+					}
+					
+					if(f.canWrite()) {
+						File fNew = new File(folderOut + "/" + f.getName());
+						System.out.println("pomestuvam " + f.getAbsolutePath());
+						f.renameTo(fNew);
+					}
+					
+					if(!f.canWrite()) {
+						try {
+							read = new RandomAccessFile(f, "r");
+							write = new RandomAccessFile(fWrite, "rw");
+							
+							write.seek(write.length());
+							
+							int c;
+							
+							while((c=read.read()) != -1) {
+								write.write(c);
+							}
+							System.out.println("dopisuvam " + f.getAbsolutePath());
+							
+						} catch (Exception e) { }
+						finally {
+							if(read != null) {
+								read.close();
+							}
+							if(write != null) {
+								write.close();
+							}
+						}
+					}
+				}
+			}
+		}
+		else {
+			System.out.println("ne postoi");
+		}
+		
+	}
+
+	public static void main(String[] args) throws IOException {
+		
+		//names of in and out folders
+		manage("in", "out");
+		
+	}
+
+}
