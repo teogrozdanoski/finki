@@ -1,4 +1,4 @@
-//package Lab_2019;
+//package os_threads;
 
 public class TwoThreads {
 	
@@ -32,3 +32,4 @@ public class TwoThreads {
     }
 
 }
+
