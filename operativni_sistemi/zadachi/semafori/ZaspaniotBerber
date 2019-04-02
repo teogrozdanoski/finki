@@ -33,7 +33,7 @@ package semafori;
 
 Претходно назначените методи служат за проверка на точноста на сценариото и не смеат да бидат променети и мораат да бидат повикани.
 
-Вашата задача е да ги имплементирате методите Barber.execute()и Customer.execute() и init().*/
+Вашата задача е да ги имплементирате методите Barber.execute() и Customer.execute() и init().*/
 
 import java.util.ArrayList;
 import java.util.HashMap;
