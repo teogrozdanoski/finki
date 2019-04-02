@@ -1,56 +1,49 @@
-//package Lab_2019;
+//
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class HW01_2 {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws IOException {
 
-		long position = 0;
-		
-		String absPath = "C:/Users/Teo Grozdanoski/Documents/myFolder/";
-		String source = absPath + "izvorb.txt";
-		String destination = absPath + "destinacijab.txt";
-		
-		File fsrc = null;
-		File fdst = null;
-		
-		RandomAccessFile input = null;
-		RandomAccessFile output = null;
-				
+		String absolutePath = "C:\\Users\\Teo Grozdanoski\\Documents\\FINKI\\Leten_Semestar_2018-2019\\Operativni_Sistemi\\Kod\\io_test\\";
+
+		String sourceString = absolutePath + "izvor.txt";
+		String destinationString = absolutePath + "destinacija.txt";
+
+		File src = null;
+		File dst = null;
+
+		RandomAccessFile in = null;
+		RandomAccessFile out = null;
+
 		try {
+
+			src = new File(sourceString);
+			dst = new File(destinationString);
+
+			in = new RandomAccessFile(src, "r");
+			out = new RandomAccessFile(dst, "rw");
 			
-			fsrc = new File(source);
-			fdst = new File(destination);
-			
-			input = new RandomAccessFile(fsrc, "r");
-			output = new RandomAccessFile(fdst, "rw");
-			
-			position = fsrc.length();
-			
-			while (position > 0) {
-			      position -= 1;
-			      input.seek(position);
-			      byte b = input.readByte();
-			      output.write((char) b);
-			    }
-			
-			if(!fsrc.exists()) {
-				System.out.println("Izvornata datoteka ne postoi");
-				return;
-			}
-			if(!fdst.exists()) {
-				System.out.println("Destinaciskata datoteka ne postoi");
-				return;
+			for(Long i=src.length()-1; i>=0; i--) {
+				out.seek(i);
+				out.write(in.read());
 			}
 			
-		} catch (Exception e) {
-			throw e;
+		} catch (FileNotFoundException e) {
+			
+			e.printStackTrace();
+		
 		} finally {
-			input.close();
-			output.close();
+			
+			in.close();
+			out.close();
+			
 		}
+
 	}
 
 }
