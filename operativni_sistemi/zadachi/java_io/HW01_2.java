@@ -27,21 +27,21 @@ public class HW01_2 {
 
 			in = new RandomAccessFile(src, "r");
 			out = new RandomAccessFile(dst, "rw");
-			
-			for(Long i=src.length()-1; i>=0; i--) {
+
+			for (Long i = src.length() - 1; i >= 0; i--) {
 				out.seek(i);
 				out.write(in.read());
 			}
-			
+
 		} catch (FileNotFoundException e) {
-			
+
 			e.printStackTrace();
-		
+
 		} finally {
-			
+
 			in.close();
 			out.close();
-			
+
 		}
 
 	}
